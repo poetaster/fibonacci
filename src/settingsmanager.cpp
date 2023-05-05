@@ -3,7 +3,7 @@
 SettingsManager::SettingsManager(QObject *parent) :
     QObject(parent)
 {
-    settings = new QSettings("harbour-rpncalc", "harbour-rpncalc");
+    settings = new QSettings("harbour-fibonacci", "harbour-fibonacci");
 
     if(settings->value("vibration") == QVariant()) settings->setValue("vibration", 0);
     if(settings->value("angle_unit") == QVariant()) settings->setValue("angle_unit", QString("Degree"));

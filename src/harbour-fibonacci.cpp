@@ -1,7 +1,9 @@
 #include <QtQuick>
-
+#include <QString>
+#include <QObject>
+#include <QtQml>
 #include <sailfishapp.h>
-#include <settingsmanager.h>
+#include "settingsmanager.h"
 
 int main(int argc, char *argv[])
 {

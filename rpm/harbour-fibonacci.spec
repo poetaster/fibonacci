@@ -14,6 +14,7 @@ Name:       harbour-fibonacci
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
+
 Summary:    A RPN Calculator with exprtk interface for Sailfish
 Version:    2.6
 Release:    1
@@ -56,33 +57,33 @@ Full symbolic RPN calculator. Also includes a programmable calculator using expr
 
 # >> build post
 echo %_builddir
-cp -r ../python_modules_src %_builddir/
+cp -r ../fibonacci/common/python_modules_src %_builddir/
 
 cd python_modules_src/
 
 tar xvf fastcache-1.0.2.tar.gz
-cd fastcache-1.0.2
-python3 setup.py build
-cd ..
+#cd fastcache-1.0.2
+#python3 setup.py build
+#cd ..
 
 tar xvf sympy-0.7.6.1.tar.gz
-cd sympy-0.7.6.1
-python3 setup.py build
-cd ..
+#cd sympy-0.7.6.1
+#python3 setup.py build
+#cd ..
 
 tar xvf mpmath-0.19.tar.gz
-cd mpmath-0.19
-python3 setup.py build
-cd ..
+#cd mpmath-0.19
+#python3 setup.py build
+#cd ..
 
 tar xvf pyparsing-2.0.3.tar.gz
-cd pyparsing-2.0.3
-python3 setup.py build
-cd ..
+#cd pyparsing-2.0.3
+#python3 setup.py build
+#cd ..
 
 tar xvf dice-1.0.2.tar.gz
-cd dice-1.0.2
-python3 setup.py build
+#cd dice-1.0.2
+#python3 setup.py build
 
 cd ..
 # << build post
@@ -136,13 +137,9 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_datadir}/icons/hicolor/108x108/apps/%{name}.png
-%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
-%{_datadir}/icons/hicolor/172x172/apps/%{name}.png
-%{_datadir}/icons/hicolor/256x256/apps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}
 %{_bindir}
+%{_datadir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 # >> files
 # << files

@@ -8,7 +8,9 @@
 #         - icon definition filename in desktop file must be changed
 TARGET = harbour-fibonacci
 
+CONFIG += c++17
 CONFIG += sailfishapp
+QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
     src/harbour-fibonacci.cpp \
@@ -18,13 +20,12 @@ SOURCES += \
     src/settingsmanager.h
 
 OTHER_FILES += \
-    rpm/sailfish-rpn-calc.spec \
-    rpm/harbour-rpncalc.spec \
+    rpm/harbour-fibonacci.spec \
     harbour-rpncalc.desktop \
     qml/cover/CoverPage.qml \
     qml/pages/MainPage.qml \
-    qml/cover/harbour-rpncalc.png \
-    qml/harbour-rpncalc.qml \
+    qml/cover/harbour-fibonacci.png \
+    qml/harbour-fibonacci.qml \
     qml/pages/Settings.qml \
     qml/pages/SymbolPage.qml \
     qml/pages/WideLandscape.qml \
@@ -38,11 +39,14 @@ OTHER_FILES += \
     qml/elements/CustomBackgroundItem.qml \
     qml/elements/CustomGlassItem.qml \
     qml/elements/OperandEditor.qml \
+    common/python_modules_src/*
 
 python.path = /usr/share/$${TARGET}
 python.files = python
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+#DISTFILES += icons
+
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 
 
 INSTALLS += python
