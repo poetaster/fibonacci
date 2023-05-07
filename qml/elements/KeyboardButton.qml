@@ -84,11 +84,10 @@ MouseArea {
         color: buttonRect.fontColor
     }
 
-    /*
     onClicked: {
+        mainLabel.color=Theme.highlightColor
         if(settings.vibration()){
             vibration.start();
         }
     }
-    */
 }

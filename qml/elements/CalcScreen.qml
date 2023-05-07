@@ -124,7 +124,7 @@ Item{
                     height: calcScreen.fontSize
                     CustomBackgroundItem {
                         width: parent.width / 3
-                        height: Theme.itemSizeSmall
+                        height: calcScreen.fontSize
                         Label{
                             text: "Pick"
                             anchors.centerIn: parent
@@ -139,7 +139,7 @@ Item{
                     }
                     CustomBackgroundItem {
                         width: parent.width / 3
-                        height: Theme.itemSizeSmall
+                        height: calcScreen.fontSize
                         Label{
                             text: "Drop"
                             anchors.centerIn: parent
@@ -154,7 +154,7 @@ Item{
                     }
                     CustomBackgroundItem {
                         width: parent.width / 3
-                        height: Theme.itemSizeSmall
+                        height: calcScreen.fontSize
                         Label{
                             text: "Copy"
                             anchors.centerIn: parent

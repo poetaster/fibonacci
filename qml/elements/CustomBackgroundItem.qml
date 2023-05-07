@@ -7,6 +7,7 @@ MouseArea {
     property real highlightedOpacity: 0.3
 
     Rectangle {
+
         anchors.fill: parent
 
         color: parent.color

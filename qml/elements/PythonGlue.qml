@@ -123,7 +123,7 @@ Python {
 
         updateFakeFirstElements();
 
-        screenObj.view.positionViewAtEnd();
+        //screenObj.view.positionViewAtEnd();
 
         currentStack = stack;
     }
