@@ -4,9 +4,9 @@
 # 
 
 Name:       harbour-fibonacci
-
 # >> macros
-%define __provides_exclude_from ^%{_datadir}/.*$
+%define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
+%define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude ^libc|libdl|libm|libpthread|libpython3.7m|libpython3.4m|python|env|libutil.*$
 # << macros
 
@@ -56,36 +56,36 @@ Full symbolic RPN calculator. Also includes a programmable calculator using expr
 %qtc_make %{?_smp_mflags}
 
 # >> build post
-echo %_builddir
-cp -r ../fibonacci/common/python_modules_src %_builddir/
+#echo %_builddir
+#cp -r ../fibonacci/common/python_modules_src %_builddir/
 
-cd python_modules_src/
+#cd python_modules_src/
 
-tar xvf fastcache-1.0.2.tar.gz
+#tar xvf fastcache-1.0.2.tar.gz
 #cd fastcache-1.0.2
 #python3 setup.py build
 #cd ..
 
-tar xvf sympy-0.7.6.1.tar.gz
+#tar xvf sympy-0.7.6.1.tar.gz
 #cd sympy-0.7.6.1
 #python3 setup.py build
 #cd ..
 
-tar xvf mpmath-0.19.tar.gz
+#tar xvf mpmath-0.19.tar.gz
 #cd mpmath-0.19
 #python3 setup.py build
 #cd ..
 
-tar xvf pyparsing-2.0.3.tar.gz
+#tar xvf pyparsing-2.0.3.tar.gz
 #cd pyparsing-2.0.3
 #python3 setup.py build
 #cd ..
 
-tar xvf dice-1.0.2.tar.gz
+#tar xvf dice-1.0.2.tar.gz
 #cd dice-1.0.2
 #python3 setup.py build
 
-cd ..
+#cd ..
 # << build post
 
 %install
@@ -96,36 +96,36 @@ rm -rf %{buildroot}
 
 # >> install post
 
-cd python_modules_src/
+#cd python_modules_src/
 
-cd fastcache-1.0.2
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-cd ..
+#cd fastcache-1.0.2
+#python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+#cd ..
 
 #cd numpy-1.9.2
 #python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
 #cd ..
 
-cd sympy-0.7.6.1
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-cd ..
+#cd sympy-0.7.6.1
+#python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+#cd ..
 
-cd pyparsing-2.0.3
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-cd ..
+#cd pyparsing-2.0.3
+#python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+#cd ..
 
-cd mpmath-0.19
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-cd ..
+#cd mpmath-0.19
+#python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+#cd ..
 
-cd dice-1.0.2
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-cd ..
+#cd dice-1.0.2
+#python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+#cd ..
 
 rm -rf %{buildroot}/%{_datadir}/%{name}/share
 rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
-cd ..
+#cd ..
 
 #cp /usr/lib/libpython3.7m.so.1.0 %{buildroot}/%{_datadir}/%{name}/lib/
 #cp /lib/libutil.so.1 %{buildroot}/%{_datadir}/%{name}/lib/libutil.so.1

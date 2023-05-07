@@ -39,15 +39,20 @@ OTHER_FILES += \
     qml/elements/CustomBackgroundItem.qml \
     qml/elements/CustomGlassItem.qml \
     qml/elements/OperandEditor.qml \
-    common/python_modules_src/*
 
 python.path = /usr/share/$${TARGET}
 python.files = python
 
-#DISTFILES += icons
+
+libs.path = /usr/share/$${TARGET}
+libs.files = lib
+
+
+INSTALLS += python
+INSTALLS += libs
+
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 
 
-INSTALLS += python
 

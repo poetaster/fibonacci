@@ -4,7 +4,8 @@ import threading
 from enum import Enum, IntEnum, unique
 
 (major, minor, micro, release, serial) = sys.version_info
-sys.path.append("/usr/share/harbour-fibonacci/lib/python" + str(major) + "." + str(minor) + "/site-packages/");
+#sys.path.append("/usr/share/harbour-fibonacci/lib/python" + str(major) + "." + str(minor) + "/site-packages/");
+sys.path.append("/usr/share/harbour-fibonacci/lib/");
 
 import pyotherside
 from rpncalc_common import *

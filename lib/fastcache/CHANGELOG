@@ -1,0 +1,37 @@
+*1.0.2*
+- use pytest for testing
+- Bug fix for windows compatibility
+
+*1.0.1*
+- better error checking so fastcache now plays well with signals.  There is a performance hit for this.  Next Release should handle this better.
+
+*1.0.0*
+
+- clru_cache now supports dynamic attributes.
+- (c)lru_cache is now threadsafe via custom reentrant locks.
+
+*0.4.3*
+
+- Fixed bug in hash computations which resulted in `stack overflow`.  The appropriate error (RuntimeError) is now returned
+
+*0.4.2*
+
+- The 'state' argument to clru_cache can now be a list or a dict
+- Slight performance improvemants
+- Fixed compiler warnings for Python 2 builds
+- Use setuptools by default.  The environment variable USE_DISTUTILS=True
+  forces the use of distutils
+
+*0.4.0*
+
+API change:
+
+Default behavior of fastcache is changed to raise TypeError on
+unhashable arguments to be 100% consistent with stdlib.
+
+Introduce a new argument 'unhashable' which controls how fastcache
+responds to unhashable arguments:
+	*'error' (default) - raise TypeError
+	*'warning' - raise UserWarning and call decorated function with args
+	*'ignore'  - call decorated function
+
