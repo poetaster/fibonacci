@@ -49,7 +49,7 @@ ApplicationWindow
         property string currentOperand
         property var currentStack
         property bool engineLoaded
-
+        currentStack: root.currentStack
         currentOperand: root.currentOperand
         engineLoaded: root.engineLoaded
 

@@ -51,6 +51,34 @@ CoverBackground {
                 Row{
                     width: parent.width
                     Label {
+                        id: stack_4_id
+                        horizontalAlignment: Text.AlignLeft
+                        color: Theme.primaryColor
+                        text: "5:"
+                    }
+                    Label {
+                        width: parent.width - stack_2_id.width - 4
+                        horizontalAlignment: Text.AlignRight
+                        text: root.memoryModel.count > 2 ? root.memoryModel.get(root.memoryModel.count - 5).value : ""
+                    }
+                }
+                Row{
+                    width: parent.width
+                    Label {
+                        id: stack_3_id
+                        horizontalAlignment: Text.AlignLeft
+                        color: Theme.primaryColor
+                        text: "4:"
+                    }
+                    Label {
+                        width: parent.width - stack_2_id.width - 4
+                        horizontalAlignment: Text.AlignRight
+                        text: root.memoryModel.count > 2 ? root.memoryModel.get(root.memoryModel.count - 4).value : ""
+                    }
+                }
+                Row{
+                    width: parent.width
+                    Label {
                         id: stack_2_id
                         horizontalAlignment: Text.AlignLeft
                         color: Theme.primaryColor
@@ -97,7 +125,7 @@ CoverBackground {
         anchors{
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            bottomMargin: 10
+            bottomMargin: Theme.paddingLarge
         }
         source: "harbour-fibonacci.png"
     }

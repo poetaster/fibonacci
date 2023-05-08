@@ -116,7 +116,7 @@ Item{
 
                 function showOptionsForItem(showItem, item){
                     menu.currentItem = item;
-                    menu.show(showItem);
+                    menu.open(showItem);
                 }
 
                 Row {
@@ -161,7 +161,7 @@ Item{
                         }
                         onClicked: {
                             copyToClipboard(menu.currentItem.text);
-                            menu.hide();
+                            menu.close();
                             popup.notify("Copied to clipboard !");
                         }
                     }
