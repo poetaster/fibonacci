@@ -24,6 +24,8 @@ constants = Constants.constants
 constantsArray = Constants.constantsArray
 
 Constants.addConstant("pi", "π", pi)
+#Constants.addConstant("e", "e", e)
+#Constants.addConstant("phi", "phi", phi)
 
 @Constants.addConstant
 class Celerity(NumberSymbol):
@@ -180,4 +182,6 @@ class ElementaryCharge(NumberSymbol):
         return 'q'
 
 q = ElementaryCharge()
+
+
 

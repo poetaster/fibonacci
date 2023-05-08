@@ -27,10 +27,11 @@ Python {
 
 
         importModule('rpncalc_engine', function () {
-            console.log("Module successfully imported. Loading engine.");
-            changeTrigonometricUnit(settingsObj.angleUnit);
-            changeReprFloatPrecision(settingsObj.reprFloatPrecision);
-            newStackHandler([]);
+            changeTrigonometricUnit(settingsObj.angleUnit)
+            changeReprFloatPrecision(settingsObj.reprFloatPrecision)
+            newStackHandler([])
+            console.log("Module successfully imported. Loading engine.")
+            root.engineLoaded = true
 
            // this was sailfish only
            //stackObj.pushAttached(Qt.resolvedUrl("../pages/Settings.qml"));

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
 
@@ -9,10 +9,10 @@ Page {
     id: page
 
     // should be set from python engine in the parent
-    property string currentOperand: ''
-    property bool currentOperandValid: true
-    property var currentStack: []
-    property bool engineLoaded: false
+    property string currentOperand
+    property bool currentOperandValid
+    property var currentStack
+    property bool engineLoaded: stat.engineLoaded
 
     // View properties. Python engine might access this
     property alias screen: calcScreen
@@ -110,175 +110,195 @@ Page {
         Clipboard.text = value;
     }
 
-    Item {
-        id: heightMeasurement
-        anchors.bottom: currentOperandEditor.top
-        anchors.top: parent.top
+    SilicaFlickable {
 
-        visible: false
-    }
+        anchors.fill: parent
 
-    Popup {
-        id: popup
-        z: 10
-
-        timeout: 3000
-
-        padding: page.paddingSmall
-
-        defaultColor: page.secondaryHighlightColor
-        labelMargin: page.paddingSmall
-    }
-    CalcScreen {
-        id: calcScreen
-
-        anchors.bottom: currentOperandEditor.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        fontColor: primaryColor
-        glassItemColor: page.highlightColor
-        fontSize: page.fontSizeExtraLarge
-        fontFamily: page.fontFamily
-
-        dropIconPath: "image://Theme/icon-l-backspace"
-        dropIconColor: page.primaryColor
-
-        height: heightMeasurement.height > contentHeight ? contentHeight : heightMeasurement.height
-
-        clip: true
-
-        model: memory
-
-        scrollIndicatorHeight: page.paddingSmall
-
-        horizontalScrollPadding: page.paddingSmall
-        horizontalScrollDecorator: HorizontalScrollDecorator{
-            height: Math.round(page.paddingSmall/4)
-
-            opacity: 0.5    // always visible
+        PullDownMenu {
+            RemorsePopup { id: remorse_output }
+            MenuItem {
+                text: qsTr("Fibonacci Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
+                text: qsTr("Programmable calculator")
+                onClicked: pageStack.replace(Qt.resolvedUrl("Exprtk.qml"))
+            }
         }
 
-        verticalScrollPadding: page.paddingSmall
-        verticalScrollDecorator: VerticalScrollDecorator{
-            width: Math.round(page.paddingSmall/2)
+        Item {
+            id: heightMeasurement
+            anchors.bottom: currentOperandEditor.top
+            anchors.top: parent.top
 
-            opacity: 0.5    // always visible
-        }
-    }
-
-    OperandEditor {
-        id: currentOperandEditor
-
-        anchors.bottom: infosRow.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.leftMargin: 10
-
-        operand: page.currentOperand
-        operandInvalid: page.currentOperandValid ? false : true  // <= lol
-
-        backIcon: "image://Theme/icon-l-backspace"
-        backIconColor: page.primaryColor
-
-        fontSize: page.fontSizeExtraLarge
-        fontFamily: page.fontFamily
-        horizontalScrollPadding: page.paddingSmall
-        fontColor: page.primaryColor
-        invalidFontColor: "red"
-
-        horizontalScrollDecorator: HorizontalScrollDecorator{
-            height: Math.round(page.paddingSmall/4)
-
-            opacity: 0.5    // always visible
+            visible: false
         }
 
-        backButton.onClicked: {
-            formulaPop();
-            /*
+        Popup {
+            id: popup
+            z: 10
+
+            timeout: 3000
+
+            padding: page.paddingSmall
+
+            defaultColor: page.secondaryHighlightColor
+            labelMargin: page.paddingSmall
+        }
+        CalcScreen {
+            id: calcScreen
+
+            anchors.bottom: currentOperandEditor.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            fontColor: primaryColor
+            glassItemColor: page.highlightColor
+            fontSize: page.fontSizeExtraLarge
+            fontFamily: page.fontFamily
+
+            dropIconPath: "image://Theme/icon-l-backspace"
+            dropIconColor: page.primaryColor
+
+            height: heightMeasurement.height > contentHeight ? contentHeight : heightMeasurement.height
+
+            clip: true
+
+            model: memory
+
+            scrollIndicatorHeight: page.paddingSmall
+
+            horizontalScrollPadding: page.paddingSmall
+            horizontalScrollDecorator: HorizontalScrollDecorator{
+                height: Math.round(page.paddingSmall/4)
+
+                opacity: 0.5    // always visible
+            }
+
+            verticalScrollPadding: page.paddingSmall
+            verticalScrollDecorator: VerticalScrollDecorator{
+                width: Math.round(page.paddingSmall/2)
+
+                opacity: 0.5    // always visible
+            }
+        }
+
+        OperandEditor {
+            id: currentOperandEditor
+
+            anchors.bottom: infosRow.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+
+            operand: page.currentOperand
+            operandInvalid: page.currentOperandValid ? false : true  // <= lol
+
+            backIcon: "image://Theme/icon-l-backspace"
+            backIconColor: page.primaryColor
+
+            fontSize: page.fontSizeExtraLarge
+            fontFamily: page.fontFamily
+            horizontalScrollPadding: page.paddingSmall
+            fontColor: page.primaryColor
+            invalidFontColor: "red"
+
+            horizontalScrollDecorator: HorizontalScrollDecorator{
+                height: Math.round(page.paddingSmall/4)
+
+                opacity: 0.5    // always visible
+            }
+
+            backButton.onClicked: {
+                formulaPop();
+                /*
             if(settings.vibration()){
                 vibration.start();
             }
             */
-        }
+            }
 
-        backButton.onPressAndHold: {
-            formulaReset();
-            /*
+            backButton.onPressAndHold: {
+                formulaReset();
+                /*
             if(settings.vibration()){
                 vibration.start();
             }
             */
+            }
+        }
+
+        Row {
+            id: infosRow
+
+            anchors.bottom: kbd.top
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.bottomMargin: 10
+
+            spacing: 15
+
+            Label {
+                text: !page.engineLoaded ? "IEEE754" : settings.rationalMode ? "Rational" : "IEEE754"
+                font.family: page.fontFamily
+                font.pixelSize: page.fontSizeExtraSmall
+                //font.bold: !engineLoaded
+
+                color: !page.engineLoaded ? "red" : page.secondaryColor
+            }
+
+            Label {
+                id: mode
+
+                text: !page.engineLoaded ? "Degraded" : settings.symbolicMode ? "Symbolic" : "Numeric"
+                font.family: page.fontFamily
+                font.pixelSize: page.fontSizeExtraSmall
+                //font.bold: !engineLoaded
+
+                color: !page.engineLoaded ? "red" : page.secondaryColor
+            }
+
+
+            Label {
+                id: unit
+
+                text: settings.angleUnit
+                font.family: page.fontFamily
+                font.pixelSize: page.fontSizeExtraSmall
+
+                color: page.secondaryColor
+            }
+
+        }
+
+        StdKeyboard {
+            id: kbd
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.margins: page.paddingMedium
+            anchors.bottomMargin: page.paddingLarge
+
+            columnSpacing: page.paddingSmall
+            rowSpacing: page.paddingLarge
+
+            buttonWidth: (width - (rowSpacing * 4)) / 5
+            buttonHeigth: buttonWidth * 16/17
+
+            keyboardButtonFontColor: page.primaryColor
+            keyboardButtonBorderColor: page.secondaryColor
+            keyboardButtonLeftFontColor: "orange"
+            keyboardButtonRightFontColor: page.secondaryHighlightColor
+
+            keyboardButtonFontSize: page.fontSizeMedium
+            keyboardButtonSecondaryFontSize: page.fontSizeTiny
         }
     }
-
-    Row {
-        id: infosRow
-
-        anchors.bottom: kbd.top
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        anchors.bottomMargin: 10
-
-        spacing: 15
-
-        Label {
-            text: !page.engineLoaded ? "IEEE754" : settings.rationalMode ? "Rational" : "IEEE754"
-            font.family: page.fontFamily
-            font.pixelSize: page.fontSizeExtraSmall
-            //font.bold: !engineLoaded
-
-            color: !page.engineLoaded ? "red" : page.secondaryColor
-        }
-
-        Label {
-            id: mode
-
-            text: !page.engineLoaded ? "Degraded" : settings.symbolicMode ? "Symbolic" : "Numeric"
-            font.family: page.fontFamily
-            font.pixelSize: page.fontSizeExtraSmall
-            //font.bold: !engineLoaded
-
-            color: !page.engineLoaded ? "red" : page.secondaryColor
-        }
-
-
-        Label {
-            id: unit
-
-            text: settings.angleUnit
-            font.family: page.fontFamily
-            font.pixelSize: page.fontSizeExtraSmall
-
-            color: page.secondaryColor
-        }
-
-    }
-
-    StdKeyboard {
-        id: kbd
-
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.margins: page.paddingMedium
-        anchors.bottomMargin: page.paddingLarge
-
-        columnSpacing: page.paddingSmall
-        rowSpacing: page.paddingLarge
-
-        buttonWidth: (width - (rowSpacing * 4)) / 5
-        buttonHeigth: buttonWidth * 16/17
-
-        keyboardButtonFontColor: page.primaryColor
-        keyboardButtonBorderColor: page.secondaryColor
-        keyboardButtonLeftFontColor: "orange"
-        keyboardButtonRightFontColor: page.secondaryHighlightColor
-
-        keyboardButtonFontSize: page.fontSizeMedium
-        keyboardButtonSecondaryFontSize: page.fontSizeTiny
+    Component.onCompleted: {
+         navigationState.name = "main"
+        console.log(stat.engineLoaded)
     }
 }
-
 

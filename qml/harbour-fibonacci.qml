@@ -31,33 +31,56 @@
 import QtQuick 2.2
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
+import harbour.fibonacci.qmlcomponents 1.0
 import "pages"
 import "elements"
 
 ApplicationWindow
 {
     id: root
-      ListModel {
-        id: memory
+    property string currentOperand: ''
+    property bool currentOperandValid: true
+    property var currentStack: []
+    property bool engineLoaded
+    property alias memoryModel: memory
 
-        property var stack
-      }
-    initialPage: MainPage{
-        currentStack: root.currentStack
+    QtObject {
+        id:stat
+        property string currentOperand
+        property var currentStack
+        property bool engineLoaded
+
         currentOperand: root.currentOperand
-        currentOperandValid: root.currentOperandValid
         engineLoaded: root.engineLoaded
+
     }
+
+    QtObject {
+        id: navigationState
+        property string name
+    }
+    ListModel {
+          id: memory
+          property var stack
+    }
+
+    Calculator {
+      id: calculator
+    }
+
+    ListModel {
+      id: resultsListModel
+    }
+
+    ListModel {
+      id: variablesListModel
+    }
+
+
+
     //(Screen.sizeCategory > Screen.Medium) ? wideLandscapeView : portraitView
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    property string currentOperand: ''
-
-    property bool currentOperandValid: true
-    property var currentStack: []
-
-    property bool engineLoaded: false
-    property alias memoryModel: memory
 
     Connections {
         target: settings
@@ -124,6 +147,13 @@ ApplicationWindow
         memoryObj: memory
         settingsObj: settings
     }
+    initialPage: MainPage{
+        currentStack: root.currentStack
+        currentOperand: root.currentOperand
+        currentOperandValid: root.currentOperandValid
+        engineLoaded: root.engineLoaded
+    }
+
 }
 
 

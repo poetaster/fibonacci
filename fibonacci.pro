@@ -14,31 +14,24 @@ QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
     src/harbour-fibonacci.cpp \
-    src/settingsmanager.cpp
+    src/settingsmanager.cpp \
+    src/calculator.cpp
 
     HEADERS += \
-    src/settingsmanager.h
+    src/settingsmanager.h \
+    src/calculator.hpp \
+    src/exprtk.hpp
+
 
 OTHER_FILES += \
     rpm/harbour-fibonacci.spec \
-    harbour-rpncalc.desktop \
+    harbour-fibonacci.desktop \
     qml/cover/CoverPage.qml \
-    qml/pages/MainPage.qml \
     qml/cover/harbour-fibonacci.png \
     qml/harbour-fibonacci.qml \
-    qml/pages/Settings.qml \
-    qml/pages/SymbolPage.qml \
-    qml/pages/WideLandscape.qml \
-    qml/elements/KeyboardButton.qml \
-    qml/elements/CalcScreen.qml \
-    qml/elements/Memory.qml \
-    qml/elements/StdKeyboard.qml \
-    qml/elements/Popup.qml \
-    qml/elements/StackFlick.qml \
-    qml/elements/PythonGlue.qml \
-    qml/elements/CustomBackgroundItem.qml \
-    qml/elements/CustomGlassItem.qml \
-    qml/elements/OperandEditor.qml \
+    qml/pages/*.qml \
+    qml/elements/*.qml \
+    qml/components/*.qml
 
 python.path = /usr/share/$${TARGET}/qml
 python.files = python
