@@ -58,23 +58,38 @@ Full symbolic RPN calculator. Also includes a programmable calculator using expr
 
 %install
 rm -rf %{buildroot}
+
 # >> install pre
 # << install pre
 %qmake5_install
 
-# >> install post
-
-#rm -rf %{buildroot}/%{_datadir}/%{name}/share
-#rm -rf %{buildroot}/%{_datadir}/%{name}/bin
-
-
-#cp /usr/lib/libpython3.7m.so.1.0 %{buildroot}/%{_datadir}/%{name}/lib/
-#cp /lib/libutil.so.1 %{buildroot}/%{_datadir}/%{name}/lib/libutil.so.1
 # << install post
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
+
+
+cd %{buildroot}%{_datadir}/%{name}/lib/sympy-0.7.6.1
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf  %{buildroot}%{_datadir}/%{name}/lib/sympy-0.7.6.1
+
+cd %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.0.3
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.0.3
+
+cd %{buildroot}/%{_datadir}/%{name}/lib/mpmath-0.19
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/mpmath-0.19
+
+cd %{buildroot}/%{_datadir}/%{name}/lib/dice-1.0.2
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/dice-1.0.2
+
+rm -rf %{buildroot}/%{_datadir}/%{name}/share
+rm -rf %{buildroot}/%{_datadir}/%{name}/bin
+
+cd %_builddir
 
 %files
 %defattr(-,root,root,-)

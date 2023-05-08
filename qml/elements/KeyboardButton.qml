@@ -59,10 +59,23 @@ MouseArea {
         color: buttonRect.fontColorRightOption
         text: actions[2].text
     }
-
-    Rectangle {
+    Button {
         //anchors.fill: parent
+        id: button
+        visible: mainLabel.text == "" ? false : true
+        width: parent.width
+        height: parent.height - blueLabel.paintedHeight
+        anchors.bottom: parent.bottom
+        color: parent.rectColor
+        //border.width: rectBorderWidth
+        border.color: rectBorderColor
+        //radius: 10
+        opacity: parent.rectOpacity
+        onClicked: buttonRect.clicked(true)
+    }
+    Rectangle {
         id: rect
+        visible: mainLabel.text == "" ? true : false
         width: parent.width
         height: parent.height - blueLabel.paintedHeight
         anchors.bottom: parent.bottom
@@ -85,9 +98,10 @@ MouseArea {
     }
 
     onClicked: {
-        mainLabel.color=Theme.highlightColor
+        //onClicked: console.info("MouseArea clicked")
+        /*mainLabel.color=Theme.highlightColor
         if(settings.vibration()){
             vibration.start();
-        }
+        }*/
     }
 }

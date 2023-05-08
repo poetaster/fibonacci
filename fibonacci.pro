@@ -40,7 +40,7 @@ OTHER_FILES += \
     qml/elements/CustomGlassItem.qml \
     qml/elements/OperandEditor.qml \
 
-python.path = /usr/share/$${TARGET}
+python.path = /usr/share/$${TARGET}/qml
 python.files = python
 
 

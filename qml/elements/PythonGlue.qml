@@ -12,7 +12,7 @@ Python {
     property var settingsObj
 
     Component.onCompleted: {
-        addImportPath(Qt.resolvedUrl('../../python'));
+        addImportPath(Qt.resolvedUrl('../python'));
 
         setHandler('currentOperand', currentOperandHandler);
         setHandler('newStack', newStackHandler);
