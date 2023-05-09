@@ -75,10 +75,10 @@ KeyboardLayout {
 
     KeyboardRow {
         ShiftKey {}
-        CharacterKey { caption: "var"; captionShifted: "? :"; symView: "<="; symView2: "" }
-        CharacterKey { caption: "for"; captionShifted: "~"; symView: ">="; symView2: "root" }
-        CharacterKey { caption: "if"; captionShifted: "else"; symView: "("; symView2: "max" }
-        CharacterKey { caption: "while"; captionShifted: "return"; symView: ")"; symView2: "" }
+        CharacterKey { caption: "var"; captionShifted: "? :"; symView: "<="; symView2: "root" }
+        CharacterKey { caption: "for"; captionShifted: "~"; symView: ">="; symView2: "" }
+        CharacterKey { caption: "if"; captionShifted: "else"; symView: ":"; symView2: "max" }
+        CharacterKey { caption: "while"; captionShifted: ";"; symView: ";"; symView2: ";" }
         CharacterKey { caption: ":="; captionShifted: ":="; symView: ":="; symView2: ":=" }
         BackspaceKey {}
     }
