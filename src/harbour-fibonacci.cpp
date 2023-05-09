@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication *app = SailfishApp::application(argc, argv);
     QQuickView *view = SailfishApp::createView();
-    app->setApplicationName("harbour-fibonacci");
+    app->setApplicationName("Fibonacci");
     app->setOrganizationDomain("de.poetaster");
     qmlRegisterType<calculator>("harbour.fibonacci.qmlcomponents", 1, 0, "Calculator");
     view->rootContext()->setContextProperty("settings",  &s);
