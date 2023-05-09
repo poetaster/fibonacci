@@ -33,6 +33,17 @@ Page {
       });
 
   }
+  function insertitem(values)
+  {
+      if ( values !== "" )
+      {
+          exprtkPage.formula.text = values
+          exprtkPage.formula.cursorPosition--
+          pageStack.pop() //replace(Qt.resolvedUrl("MainPage.qml"))
+
+      }
+  }
+
 
   SilicaListView {
   anchors.fill: parent
@@ -96,7 +107,9 @@ Page {
         }
         MenuItem {
           text: qsTr("Copy example")
-          onClicked: Clipboard.text = model.example
+          onClicked: {
+              Clipboard.text = model.example
+          }
         }
       }
     }

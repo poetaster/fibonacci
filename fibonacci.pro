@@ -31,7 +31,10 @@ OTHER_FILES += \
     qml/harbour-fibonacci.qml \
     qml/pages/*.qml \
     qml/elements/*.qml \
-    qml/components/*.qml
+    qml/components/*.qml \
+
+layout.path = /usr/share/maliit/plugins/com/jolla/layouts
+layout.files = layouts/programmers.qml layouts/layouts_programmers.conf
 
 python.path = /usr/share/$${TARGET}/qml
 python.files = python
@@ -41,6 +44,7 @@ libs.path = /usr/share/$${TARGET}
 libs.files = lib
 
 
+INSTALLS += layout
 INSTALLS += python
 INSTALLS += libs
 

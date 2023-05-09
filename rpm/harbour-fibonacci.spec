@@ -15,12 +15,12 @@ Name:       harbour-fibonacci
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
-Summary:    A RPN Calculator with exprtk interface for Sailfish
-Version:    2.6
+Summary:    RPN Calculator with exprtk programmagle interface for Sailfish.
+Version:    0.9
 Release:    1
 Group:      Qt/Qt
 License:    GPL
-URL:        https://github.com/lainwir3d/sailfish-rpn-calculator
+URL:        https://github.com/poetaster/fibonacci
 Source0:    %{name}-%{version}.tar.bz2
 
 #Source1:    https://files.pythonhosted.org/packages/s/fastcache/fastcache-1.0.2.tar.gz
@@ -30,6 +30,7 @@ Source0:    %{name}-%{version}.tar.bz2
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
+Requires:   jolla-keyboard
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
@@ -39,7 +40,8 @@ BuildRequires:  python3-base
 BuildRequires:  python3-devel
 
 %description
-Full symbolic RPN calculator. Also includes a programmable calculator using exprtk.
+Full symbolic RPN calculator using python sympy. Also includes a programmable calculator using exprtk.
+Based in part on https://github.com/lainwir3d/sailfish-rpn-calculator
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -91,11 +93,22 @@ rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
 cd %_builddir
 
+%post
+# >> post
+killall maliit-server
+# << post
+%postun
+# >> postun
+killall maliit-server
+# << postun
+
 %files
 %defattr(-,root,root,-)
 %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
+%{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
 # >> files
 # << files

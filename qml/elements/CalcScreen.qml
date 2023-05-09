@@ -116,7 +116,7 @@ Item{
 
                 function showOptionsForItem(showItem, item){
                     menu.currentItem = item;
-                    menu.open(showItem);
+                    menu.show(showItem);
                 }
 
                 Row {
@@ -134,7 +134,7 @@ Item{
                                 menu.toPick = menu.currentItem.invertedIndex; // do not drop immediately, wait after menu is closed.
                             }
 
-                            menu.hide();
+                            menu.close();
                         }
                     }
                     CustomBackgroundItem {
@@ -149,7 +149,7 @@ Item{
                                 menu.toDrop = menu.currentItem.invertedIndex; // do not drop immediately, wait after menu is closed.
                             }
 
-                            menu.hide();
+                            menu.close();
                         }
                     }
                     CustomBackgroundItem {

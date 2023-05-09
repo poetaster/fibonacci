@@ -83,7 +83,8 @@ Item{
 
         function flickToRightEdge(){
             if((operandLabel.paintedWidth > operandEditor.flickableSize) && !atXEnd){
-                console.log("flick !!");
+                //console.log("flick !!");
+                //console.log(operandLabel.text);
                 contentX = operandLabel.paintedWidth - flickable.width;
             }
         }
@@ -119,6 +120,10 @@ Item{
                 text: ""
 
                 onTextChanged: {
+                    //console.log(text)
+                    //console.log(operand)
+                    //console.log(height)
+                    //console.log(width)
                     flickable.flickToRightEdge();
                 }
             }
@@ -152,4 +157,5 @@ Item{
             }
         }
     }
+
 }

@@ -1,6 +1,10 @@
 /*
   Copyright (C) 2016 Heiko Bauke
-  Contact: Heiko Bauke <heiko.bauke@mail.de>
+  Copyright (C) 2023 Mark Washeim
+
+ Contact: Heiko Bauke <heiko.bauke@mail.de>
+  Contact: Mark Washeim <blueprint@poetaster.de>
+
   All rights reserved.
 
   You may use this file under the terms of BSD license as follows:
@@ -35,174 +39,218 @@ import harbour.fibonacci.qmlcomponents 1.0
 import "../components"
 
 Page {
-  id: main_page
+    id: exprtkPage
 
-  property var varstxt
-  function format(formula, variable, result, error) {
-      // return result + " " + error
-      formula = formula.replace(/(\r\n|\n|\r)/gm, "");
-      return formula + " =\n " + result + " "  + error
-      //return variable !== "" && formula === result ? variable + " := " + result : ((variable !== "" ? variable + " := " : "") + formula + " = " + result + (error !== "" ? " (" + error + ") ": ""))
-  }
+    property var varstxt
+    function format(formula, variable, result, error) {
+        // return result + " " + error
+        formula = formula.replace(/(\r\n|\n|\r)/gm, "");
+        return formula + " =\n " + result + " "  + error
+        //return variable !== "" && formula === result ? variable + " := " + result : ((variable !== "" ? variable + " := " : "") + formula + " = " + result + (error !== "" ? " (" + error + ") ": ""))
+    }
 
-  /* c++ precre variant
+    /* c++ precre variant
      static const QRegularExpression assignment_regex{R"(var\s*([[:alpha:]]\w*)\s*:=\s*([[:digit:]]*);)"};
       We shift the variable handling to javascript.
   */
 
-  /* add to app wide list to strip our syntax */
-  function getVariables() {
-      variablesListModel.clear()
-      // get the internal vars common to all
-     // var variables = calculator.getVariables()
-     // for (var i in variables)
-     //   variablesListModel.append({variable: variables[i]})
+    /* add to app wide list to strip our syntax */
+    function getVariables() {
+        variablesListModel.clear()
+        // get the internal vars common to all
+        // var variables = calculator.getVariables()
+        // for (var i in variables)
+        //   variablesListModel.append({variable: variables[i]})
 
-      const regex = /var\s*(\w*)\s*:=\s*(\d*);/gm;
-      var m
-      while ((m = regex.exec(varstxt)) !== null) {
-          // This is necessary to avoid infinite loops with zero-width matches
-          if (m.index === regex.lastIndex) {
-              regex.lastIndex++;
-          }
-          // The result can be accessed through the `m`-variable.
-          // add our special cases
-          variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
-      }
-      const regex2 = /(\w*)\s*:=\s*(\d*);/gm;
-      while ((m = regex2.exec(varstxt)) !== null) {
-          if (m.index === regex.lastIndex) {
-              regex2.lastIndex++;
-          }
-          variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
-      }
-  }
-  /* strip vars from the result formula to present */
-  function stripVariables() {
-      /*
-      variablesListModel.clear()
-      var variables = calculator.getVariables()
-      for (var i in variables)
-        variablesListModel.append({variable: variables[i]})
-      */
-      const regex = /var\s*(\w*)\s*:=\s*(\d*);/gm;
-      var m
-      while ((m = regex.exec(varstxt)) !== null) {
-          // This is necessary to avoid infinite loops with zero-width matches
-          if (m.index === regex.lastIndex) {
-              regex.lastIndex++;
-          }
-          // The result can be accessed through the `m`-variable.
-          // add our special cases
-          variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
-      }
-  }
-  SilicaListView {
-    anchors.fill: parent
-    id: listView
-    focus: false
-
-    VerticalScrollDecorator { flickable: listView }
-
-    PullDownMenu {
-      RemorsePopup { id: remorse_output }
-      MenuItem {
-        text: qsTr("Settings")
-        onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-      }
-      MenuItem {
-        text: qsTr("Scientific calculator")
-        onClicked: pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
-      }
-
-    }
-    PushUpMenu {
-        MenuItem {
-          text: qsTr("Prototype functions")
-          onClicked: pageStack.push(Qt.resolvedUrl("ExprtkPrototypes.qml"))
+        const regex = /var\s*(\w*)\s*:=\s*(\d*);/gm;
+        var m
+        while ((m = regex.exec(varstxt)) !== null) {
+            // This is necessary to avoid infinite loops with zero-width matches
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            // The result can be accessed through the `m`-variable.
+            // add our special cases
+            variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
         }
-        MenuItem {
-            RemorsePopup { id: remorse_variables }
-            text: qsTr("Remove all output")
-            onClicked: remorse_output.execute(qsTr("Removing all output"),
-                                              function() {
-                                                  resultsListModel.clear()
-                                              } )
+        const regex2 = /(\w*)\s*:=\s*(\d*);/gm;
+        while ((m = regex2.exec(varstxt)) !== null) {
+            if (m.index === regex.lastIndex) {
+                regex2.lastIndex++;
+            }
+            variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
+        }
+    }
+    /* strip var from the result formula to present */
+    function stripVariables() {
+        const regex = /var\s*(\w*)\s*:=\s*(\d*);/gm;
+        var m
+        while ((m = regex.exec(varstxt)) !== null) {
+            // This is necessary to avoid infinite loops with zero-width matches
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            // The result can be accessed through the `m`-variable.
+            // add our special cases
+            variablesListModel.append({variable: {"variable": m[1], "value": m[2] } })
         }
     }
 
-    Component {
-      id: headerComponent
-      Item {
-        id: headerComponentItem
-        anchors.horizontalCenter: main_page.Center
-        anchors.top: parent.Top
-        anchors.bottomMargin: 3 * Theme.paddingLarge
-        height: pageHeader.height + formula.height + vars.height + 3 * Theme.paddingLarge
-        width: main_page.width
-        PageHeader {
-          id: pageHeader
-          title: qsTr("Programmable calculator")
-        }
-        QueryField {
-          id: vars
-          anchors.top: pageHeader.bottom
-          width: listView.width
-          text: "x:=0; y:=1; var t[2]:={0,1}; z:=12; "
-          placeholderText: qsTr("Variables")
-          inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-          EnterKey.enabled: text.length > 0
-          EnterKey.onClicked: {
-              varstxt = text
-              var txt = text + " " + formula.text
-              var res = calculator.exprtk(txt)
-              res.variable = text
-              res.formula = formula.text
-              if (res.iresults.length > 0 ) {
-                  var resultn = ""
-                  for (x in res.iresults) {
-                     resultn +=  res.iresults[x]
-                      if (x<res.iresults.length-1)
-                          resultn += ", "
-                  }
-                  res.result = resultn
-              }
-              resultsListModel.insert(0, res)
-              getVariables()
-          }
-        }
-        QueryArea {
-          id: formula
-          anchors.top: vars.bottom
-          width: listView.width
-          height: Theme.buttonWidthSmall
-          text: "while((x+=1)<z)" +"\n"+ "{y:=sum(r);r[0]:=r[1];r[1]:=y;a[x]:=y}"+ "\n" + "return[a];"
-          placeholderText: qsTr("Mathematical expression")
-          inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
-          EnterKey.enabled: text.length > 0
-          /*EnterKey.onClicked: {
-              varstxt = vars.text
-              var txt = vars.text + " " + formula.text
-              var res = calculator.exprtk(txt)
-              res.variable = vars.text
-              res.formula = formula.text
-              // if we have iresultes we had a return
-              // and we replace result with the contents of the
-              // expression.results()
-              if (res.iresults.length > 0 ) {
-                  var resultn = ""
-                  for (x in res.iresults) {
-                     resultn +=  res.iresults[x]
-                      if (x<res.iresults.length-1)
-                          resultn += ", "
-                  }
-                  res.result = resultn
-              }
+    /* strip var from the result formula to present */
+    function filterVariables(text) {
+        const re0 = /·/g;
+        const re1 = /π/g;
+        const re2 = /√/g;
+        const newtxt = text.replace(re0, "*")
+        newtxt = newtxt.replace(re1, "pi")
+        newtxt = newtxt.replace(re2, "sqrt")
+        return newtxt
+    }
 
-              resultsListModel.insert(0, res)
-              getVariables()
-          }*/
+    SilicaListView {
+        anchors.fill: parent
+        id: listView
+        focus: false
 
+        VerticalScrollDecorator { flickable: listView }
+
+        PullDownMenu {
+            RemorsePopup { id: remorse_output }
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
+                text: qsTr("Scientific calculator")
+                onClicked: pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
+            }
+
+        }
+        PushUpMenu {
+            MenuItem {
+                text: qsTr("Prototype functions")
+                onClicked: pageStack.push(Qt.resolvedUrl("ExprtkPrototypes.qml"))
+            }
+            MenuItem {
+                RemorsePopup { id: remorse_variables }
+                text: qsTr("Remove all output")
+                onClicked: remorse_output.execute(qsTr("Removing all output"),
+                                                  function() {
+                                                      resultsListModel.clear()
+                                                  } )
+            }
+        }
+
+        Component {
+            id: headerComponent
+            Item {
+                id: headerComponentItem
+                anchors.horizontalCenter: exprtkPage.Center
+                anchors.top: parent.Top
+                anchors.bottomMargin: 3 * Theme.paddingLarge
+                height: pageHeader.height + formula.height + vars.height + 3 * Theme.paddingLarge
+                width: exprtkPage.width
+                PageHeader {
+                    id: pageHeader
+                    title: qsTr("Programmable calculator")
+                }
+                QueryField {
+                    id: vars
+                    anchors.top: pageHeader.bottom
+                    width: listView.width
+                    text: "x:=0; y:=1; var t[2]:={0,1}; z:=12; "
+                    placeholderText: qsTr("Variables")
+                    inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhPreferNumbers
+                    EnterKey.enabled: text.length > 0
+                    EnterKey.onClicked: {
+                        varstxt = text
+                        var txt = filterVariables(vars.text) + " " + filterVariables(formula.text)
+                        var res = calculator.exprtk(txt)
+                        res.variable = text
+                        res.formula = formula.text
+                        if (res.iresults.length > 0 ) {
+                            var resultn = ""
+                            for (x in res.iresults) {
+                                resultn +=  res.iresults[x]
+                                if (x<res.iresults.length-1)
+                                    resultn += ", "
+                            }
+                            res.result = resultn
+                        }
+                        resultsListModel.insert(0, res)
+                        getVariables()
+                    }
+                }
+                QueryArea {
+                    id: formula
+                    anchors.top: vars.bottom
+                    width: listView.width
+                    height: Theme.buttonWidthSmall
+                    text: "while((x+=1)<z)" +"\n"+ "{y:=sum(r);r[0]:=r[1];r[1]:=y;a[x]:=y}"+ "\n" + "return[a];"
+                    placeholderText: qsTr("Mathematical expression")
+                    inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhPreferNumbers
+                    EnterKey.enabled: text.length > 0
+                }
+                IconButton {
+                    id: accept
+                    width: icon.width
+                    height: icon.height
+                    icon.source: "image://theme/icon-m-acknowledge"
+                    anchors {
+                        top: formula.bottom
+                        right: parent.right
+                        topMargin: Theme.paddingSmall
+                        rightMargin: Theme.paddingSmall + 5
+                    }
+                    onClicked: {
+                        vars.EnterKey.clicked(true)
+                    }
+                }
+
+            }
+        }
+
+        header: headerComponent
+
+        model: resultsListModel
+
+        delegate: ListItem {
+            width: parent.width
+            contentWidth: parent.width
+            contentHeight: result_text.height + Theme.paddingLarge
+            menu: contextMenu
+            Text {
+                id: result_text
+                focus: false
+                x: Theme.horizontalPageMargin
+                y: 0.5 * Theme.paddingLarge
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.topMargin: Theme.paddingMedium
+                anchors.bottomMargin: Theme.paddingMedium
+                color: Theme.primaryColor
+                wrapMode: TextEdit.Wrap
+                font.pixelSize: Theme.fontSizeMedium
+                horizontalAlignment: TextEdit.AlignLeft
+                text: format(formula, variable, result, error)
+                //text: result
+            }
+            Component {
+                id: contextMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Copy result")
+                        onClicked: Clipboard.text = resultsListModel.get(model.index).result
+                    }
+                    MenuItem {
+                        text: qsTr("Copy formula")
+                        onClicked: Clipboard.text = resultsListModel.get(model.index).formula
+                    }
+                    MenuItem {
+                        text: qsTr("Remove output")
+                        onClicked: resultsListModel.remove(model.index)
+                    }
+                }
+            }
         }
         IconButton {
             id: help
@@ -210,97 +258,31 @@ Page {
             height: icon.height
             icon.source: "image://theme/icon-m-question"
             anchors {
-              top: formula.bottom
+              bottom: parent.bottom
               right: parent.right
-              topMargin: Theme.paddingSmall
+              bottomMargin: Theme.paddingMedium
               rightMargin: Theme.paddingMedium
             }
             onClicked:  pageStack.push(Qt.resolvedUrl("../components/ExprtkMenu.qml"))
         }
-        /*IconButton {
-            id: accept
-            width: icon.width
-            height: icon.height
-            icon.source: "image://theme/icon-m-enter-accept"
-            anchors {
-              top: formula.bottom
-              right: parent.right
-              leftMargin: 2*Theme.horizontalPageMargin
-              rightMargin: Theme.horizontalPageMargin
-            }
-            onClicked: {
-                varstxt = vars.text
-                var txt = vars.text + " " + formula.text
-                var res = calculator.exprtk(txt)
-                res.variable = vars.text
-                res.formula = formula.text
-                resultsListModel.insert(0, res)
-                getVariables()
-            }
-        }*/
 
-      }
     }
 
-    header: headerComponent
-
-    model: resultsListModel
-
-    delegate: ListItem {
-      width: parent.width
-      contentWidth: parent.width
-      contentHeight: result_text.height + Theme.paddingLarge
-      menu: contextMenu
-      Text {
-        id: result_text
-        focus: false
-        x: Theme.horizontalPageMargin
-        y: 0.5 * Theme.paddingLarge
-        width: parent.width - 2 * Theme.horizontalPageMargin
-        anchors.topMargin: Theme.paddingMedium
-        anchors.bottomMargin: Theme.paddingMedium
-        color: Theme.primaryColor
-        wrapMode: TextEdit.Wrap
-        font.pixelSize: Theme.fontSizeMedium
-        horizontalAlignment: TextEdit.AlignLeft
-        text: format(formula, variable, result, error)
-        //text: result
-      }
-      Component {
-        id: contextMenu
-        ContextMenu {
-          MenuItem {
-            text: qsTr("Copy result")
-            onClicked: Clipboard.text = resultsListModel.get(model.index).result
-          }
-          MenuItem {
-            text: qsTr("Copy formula")
-            onClicked: Clipboard.text = resultsListModel.get(model.index).formula
-          }
-          MenuItem {
-            text: qsTr("Remove output")
-            onClicked: resultsListModel.remove(model.index)
-          }
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            navigationState.name = "exprtk"
+            getVariables()
+            pageStack.pushAttached(Qt.resolvedUrl("Variables.qml"))
         }
-      }
     }
 
-  }
-
-  onStatusChanged: {
-    if (status === PageStatus.Active) {
-      getVariables()
-      pageStack.pushAttached(Qt.resolvedUrl("Variables.qml"))
+    Component.onDestruction: {
+        //console.log("MainPage off")
     }
-  }
+    Component.onCompleted: {
+        navigationState.name = "exprtk"
 
-  Component.onDestruction: {
-    //console.log("MainPage off")
-  }
-  Component.onCompleted: {
-       navigationState.name = "exprtk"
-
-      console.log(stat.engineLoaded)
-  }
+        console.log(stat.engineLoaded)
+    }
 
 }

@@ -10,7 +10,7 @@ Page {
 
     // should be set from python engine in the parent
     property string currentOperand
-    property bool currentOperandValid
+    property bool currentOperandValid: true
     property var currentStack
     property bool engineLoaded: stat.engineLoaded
 
@@ -122,7 +122,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Programmable calculator")
-                onClicked: pageStack.replace(Qt.resolvedUrl("Exprtk.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("Exprtk.qml"))
             }
         }
 
@@ -294,6 +294,11 @@ Page {
 
             keyboardButtonFontSize: page.fontSizeMedium
             keyboardButtonSecondaryFontSize: page.fontSizeTiny
+        }
+    }
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            navigationState.name = "main"
         }
     }
     Component.onCompleted: {
