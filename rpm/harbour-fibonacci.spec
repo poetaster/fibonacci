@@ -15,7 +15,7 @@ Name:       harbour-fibonacci
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
-Summary:    RPN Calculator with exprtk programmagle interface for Sailfish.
+Summary:    RPN Calculator with exprtk programmagle interface for SailfishOS.
 Version:    0.9
 Release:    1
 Group:      Qt/Qt
@@ -40,8 +40,26 @@ BuildRequires:  python3-base
 BuildRequires:  python3-devel
 
 %description
-Full symbolic RPN calculator using python sympy. Also includes a programmable calculator using exprtk.
+Full symbolic RPN calculator using Sympy with a programmable calculator using exprtk c++.
 Based in part on https://github.com/lainwir3d/sailfish-rpn-calculator
+
+%if "%{?vendor}" == "chum"
+PackageName: fibonacci
+Type: desktop-application
+Categories:
+ - Science
+ - Utility
+DeveloperName: Mark Washeim (poetaster)
+Custom:
+ - Repo: https://github.com/poetaster/fibonacci
+Icon: https://raw.githubusercontent.com/poetaster/fibonacci/main/icons/172x172/harbour-fibonacci.png
+Screenshots:
+ - https://raw.githubusercontent.com/poetaster/fibonacci/main/screenshot-1.png
+ - https://raw.githubusercontent.com/poetaster/fibonacci/main/screenshot-2.png
+ - https://raw.githubusercontent.com/poetaster/fibonacci/main/screenshot-3.png
+Url:
+  Donation: https://www.paypal.me/poetasterFOSS
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}

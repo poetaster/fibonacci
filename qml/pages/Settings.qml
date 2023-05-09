@@ -117,6 +117,85 @@ Page {
                 }
             }
             */
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.secondaryColor
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                text: "GNU General Public License v2. Many thanks to the following:"
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                id: iconLabel
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
+                text: "<a href=\"\https://github.com/ArashPartow/exprtk\">Exprtk c++ expression evaluation library.</a>"
+                onLinkActivated: {
+                    Qt.openUrlExternally(link)
+                }
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                id: sympylabel
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
+                text: "<a href=\"\https://github.com/sympy/sympy\">Sympy Symbolic library</a>"
+                onLinkActivated: {
+                    Qt.openUrlExternally(link)
+                }
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                id: radarLabel
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
+                text: "RPN part thanks to <a href=\"https://github.com/lainwir3d/sailfish-rpn-calculator\">Sailfish Rpncalc</a>"
+                onLinkActivated: {
+                    Qt.openUrlExternally(link)
+                }
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottomMargin: Theme.paddingSmall
+                color: Theme.secondaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
+                text:  " © 2023 Mark Washeim <a href=\"https://github.com/poetaster/fibonacci\">Source: github</a>"
+                onLinkActivated: {
+                    Qt.openUrlExternally(link)
+                }
+            }
         }
+
     }
 }
