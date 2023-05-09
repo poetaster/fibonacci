@@ -175,7 +175,26 @@ Page {
                 color: Theme.primaryColor
                 textFormat: Text.StyledText
                 linkColor: Theme.highlightColor
-                text: "RPN part thanks to <a href=\"https://github.com/lainwir3d/sailfish-rpn-calculator\">Sailfish Rpncalc</a>"
+                text: "RPN part thanks to  Richard Rondu\n" +
+                      " <a href=\"https://github.com/lainwir3d/sailfish-rpn-calculator\">Sailfish Rpncalc</a>"
+                onLinkActivated: {
+                    Qt.openUrlExternally(link)
+                }
+            }
+            Item {
+                width: parent.width
+                height: Theme.paddingLarge
+            }
+            Label {
+                id: rabaukeLabel
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
+                text: "Many thanks to Heiko Bauke \n" +
+                      "<a href=\"https://github.com/rabauke/harbour-babbage\">Babbage</a>"
                 onLinkActivated: {
                     Qt.openUrlExternally(link)
                 }

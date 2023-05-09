@@ -17,7 +17,7 @@ Name:       harbour-fibonacci
 
 Summary:    RPN Calculator with exprtk programmagle interface for SailfishOS.
 Version:    0.9
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    GPL
 URL:        https://github.com/poetaster/fibonacci
