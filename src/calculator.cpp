@@ -139,6 +139,7 @@ QVariantMap calculator::exprtk(QString formula){
     typedef exprtk::expression<T> expression_t;
     typedef exprtk::parser<T> parser_t;
     typedef exprtk::symbol_table<T> symbol_table_t;
+    //typedef exprtk::symbol_table<T> glbl_const_symbol_table_t;
 
     // Setup global constants symbol table
     T x = T(0);
@@ -148,11 +149,12 @@ QVariantMap calculator::exprtk(QString formula){
     T r[] = { T(0), T(1) };
     // a  is the accumulator
     T a[]  = { T(0), T(0),  T(0),  T(0),  T(0), T(0), T(0), T(0), T(0), T(0) };
-               //, T(0), T(0),T(0), T(0), T(0),  T(0), T(0), T(0), T(0), T(0), T(0), T(0) };
     //std::vector<double> a (100,0);
 
     symbol_table_t symbol_table;
 
+    symbol_table.add_constant("phi",(1+sqrt(5))/2);
+    // pi, e, inf are in add_plural
     symbol_table.add_constants();
     symbol_table.add_variable("x",x);
     symbol_table.add_variable("y",y);

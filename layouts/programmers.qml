@@ -56,7 +56,7 @@ KeyboardLayout {
         CharacterKey { caption: "0"; captionShifted: "g"; symView: "0"; symView2: "tan" }
         CharacterKey { caption: "<"; captionShifted: "h"; symView: ">"; symView2: "" }
         CharacterKey { caption: ">"; captionShifted: "j"; symView: "<"; symView2: "log" }
-        CharacterKey { caption: "^"; captionShifted: "k"; symView: "="; symView2: "" }
+        CharacterKey { caption: "^"; captionShifted: "k"; symView: "φ"; symView2: "φ" }
         CharacterKey { caption: "√"; captionShifted: "l"; symView: "√"; symView2: "√" }
         CharacterKey { caption: "π"; captionShifted: ":="; symView: "π"; symView2: "π" }
     }

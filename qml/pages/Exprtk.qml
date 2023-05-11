@@ -101,9 +101,11 @@ Page {
         const re0 = /·/g;
         const re1 = /π/g;
         const re2 = /√/g;
+        const re3 = /φ/g;
         const newtxt = text.replace(re0, "*")
         newtxt = newtxt.replace(re1, "pi")
         newtxt = newtxt.replace(re2, "sqrt")
+        newtxt = newtxt.replace(re3, "phi")
         return newtxt
     }
 
