@@ -15,15 +15,6 @@
 #include <QString>
 #include <QRegularExpressionMatchIterator>
 #include <QVariantMap>
-#include <iterator>
-#include <string>
-#include <vector>
-#include <deque>
-#include <stack>
-#include <stdexcept>
-#include <cmath>
-#include <limits>
-#include <algorithm>
 #include <QString>
 
 calculator::calculator(QObject *parent) : QObject(parent) {

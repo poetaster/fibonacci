@@ -138,7 +138,8 @@ Python {
 
         memoryObj.append({isLastItem: true, value: el["expr"]});
         updateFakeFirstElements();
-        screenObj.view.positionViewAtEnd();
+        // FIXME
+        //screenObj.view.positionViewAtEnd();
     }
 
     function stackPopHandler(nb){

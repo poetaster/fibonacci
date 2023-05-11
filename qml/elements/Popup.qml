@@ -5,8 +5,8 @@ MouseArea {
     id: popup
     anchors.top: parent.top
 
-    property int padding: 5
-    property int labelMargin: 5
+    property int padding: Theme.paddingLarge
+    property int labelMargin: Theme.paddingLarge
 
     width: parent.width
     height: message.paintedHeight + padding

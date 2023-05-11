@@ -24,8 +24,32 @@ constants = Constants.constants
 constantsArray = Constants.constantsArray
 
 Constants.addConstant("pi", "π", pi)
-#Constants.addConstant("e", "e", e)
-#Constants.addConstant("phi", "phi", phi)
+
+@Constants.addConstant
+class Golden(NumberSymbol):
+
+    is_real = True
+    is_positive = True
+    is_negative = False
+    is_irrational = True
+    is_number = True
+    is_algebraic = False
+
+    val='1.61803398874989490252573887'
+
+    def _eval_evalf(self,prec):
+        return N(self.val,prec)
+
+    def __str__(self,*args):
+        return  'φ'
+
+    def _sympystr(self,*args):
+        return self.val
+
+    def _latex(self,*args):
+        return 'φ_{0}'
+
+phi = Golden()
 
 @Constants.addConstant
 class Celerity(NumberSymbol):

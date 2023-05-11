@@ -86,6 +86,8 @@ Backend.engineFunction("log", lambda op: sympy.log(op, 10), operands=1)
 Backend.engineFunction("ln", lambda op: sympy.log(op), operands=1)
 Backend.engineFunction("e^x", lambda op: sympy.exp(op), operands=1)
 Backend.engineFunction("factorial", lambda op: sympy.factorial(op), operands=1)
+Backend.engineFunction("shl", lambda op: op[0] << op[1])
+Backend.engineFunction("shr", lambda op: op[0] >> op[1])
 
 @Backend.engineFunction(operands=2)
 def mul(op):
