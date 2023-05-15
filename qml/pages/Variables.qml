@@ -17,7 +17,7 @@ Page {
         text: qsTr("Clear all variables")
         onClicked: remorse_variables.execute(qsTr("Clearing all variables"),
                                              function() {
-                                               calculator.clear()
+                                               //calculator.clear()
                                                variablesListModel.clear()
                                                //var variables=calculator.getVariables()
                                                //for (var i in variables)

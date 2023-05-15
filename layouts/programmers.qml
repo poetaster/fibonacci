@@ -37,7 +37,7 @@ KeyboardLayout {
 
     KeyboardRow {
         CharacterKey { caption: "1"; captionShifted: "q"; symView: "1"; symView2: "&" }
-        CharacterKey { caption: "2"; captionShifted: "w"; symView: "2"; symView2: "" }
+        CharacterKey { caption: "2"; captionShifted: "w"; symView: "2"; symView2: "and" }
         CharacterKey { caption: "3"; captionShifted: "e"; symView: "3"; symView2: "or" }
         CharacterKey { caption: "4"; captionShifted: "r"; symView: "4"; symView2: "" }
         CharacterKey { caption: "5"; captionShifted: "t"; symView: "5"; symView2: "nor" }
@@ -54,11 +54,11 @@ KeyboardLayout {
         CharacterKey { caption: "8"; captionShifted: "d"; symView: "8"; symView2: "cos" }
         CharacterKey { caption: "9"; captionShifted: "f"; symView: "9"; symView2: "" }
         CharacterKey { caption: "0"; captionShifted: "g"; symView: "0"; symView2: "tan" }
-        CharacterKey { caption: "<"; captionShifted: "h"; symView: ">"; symView2: "" }
-        CharacterKey { caption: ">"; captionShifted: "j"; symView: "<"; symView2: "log" }
-        CharacterKey { caption: "^"; captionShifted: "k"; symView: "φ"; symView2: "φ" }
+        CharacterKey { caption: "%"; captionShifted: "h"; symView: "%"; symView2: "" }
+        CharacterKey { caption: "^"; captionShifted: "j"; symView: "^"; symView2: "log" }
+        CharacterKey { caption: "φ"; captionShifted: "k"; symView: "φ"; symView2: "" }
         CharacterKey { caption: "√"; captionShifted: "l"; symView: "√"; symView2: "√" }
-        CharacterKey { caption: "π"; captionShifted: ":="; symView: "π"; symView2: "π" }
+        CharacterKey { caption: "π"; captionShifted: ":="; symView: "π"; symView2: "" }
     }
 
     KeyboardRow {

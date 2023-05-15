@@ -41,7 +41,8 @@ import "../components"
 Page {
     id: exprtkPage
 
-    property var varstxt
+
+
     function format(formula, variable, result, error) {
         // return result + " " + error
         formula = formula.replace(/(\r\n|\n|\r)/gm, "");
@@ -102,10 +103,12 @@ Page {
         const re1 = /π/g;
         const re2 = /√/g;
         const re3 = /φ/g;
+        const re5 = /deg/g;
         const newtxt = text.replace(re0, "*")
         newtxt = newtxt.replace(re1, "pi")
         newtxt = newtxt.replace(re2, "sqrt")
         newtxt = newtxt.replace(re3, "phi")
+        newtxt = newtxt.replace(re5, "rad2deg")
         return newtxt
     }
 
@@ -123,9 +126,13 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
             MenuItem {
+                text: qsTr("Operators & Functions")
+                onClicked: pageStack.push(Qt.resolvedUrl("../components/ExprtkMenu.qml"))
+            }
+            /*MenuItem {
                 text: qsTr("Scientific calculator")
                 onClicked: pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
-            }
+            }*/
 
         }
         PushUpMenu {
@@ -150,7 +157,7 @@ Page {
                 anchors.horizontalCenter: exprtkPage.Center
                 anchors.top: parent.Top
                 anchors.bottomMargin: 3 * Theme.paddingLarge
-                height: pageHeader.height + formula.height + vars.height + 3 * Theme.paddingLarge
+                height: pageHeader.height + formfield.height + vars.height + 3 * Theme.paddingLarge
                 width: exprtkPage.width
                 PageHeader {
                     id: pageHeader
@@ -160,16 +167,19 @@ Page {
                     id: vars
                     anchors.top: pageHeader.bottom
                     width: listView.width
-                    text: "x:=0; y:=1; var t[2]:={0,1}; z:=12; "
+                    text: varstxt
                     placeholderText: qsTr("Variables")
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhPreferNumbers
                     EnterKey.enabled: text.length > 0
                     EnterKey.onClicked: {
                         varstxt = text
-                        var txt = filterVariables(vars.text) + " " + filterVariables(formula.text)
+                        formtxt = formfield.text
+                        settings.recentVars = varstxt
+                        settings.lastFormula = formtxt
+                        var txt = filterVariables(varstxt) + " " + filterVariables(formtxt)
                         var res = calculator.exprtk(txt)
                         res.variable = text
-                        res.formula = formula.text
+                        res.formula = formfield.text
                         if (res.iresults.length > 0 ) {
                             var resultn = ""
                             for (x in res.iresults) {
@@ -184,11 +194,11 @@ Page {
                     }
                 }
                 QueryArea {
-                    id: formula
+                    id: formfield
                     anchors.top: vars.bottom
                     width: listView.width
                     height: Theme.buttonWidthSmall
-                    text: "while((x+=1)<z)" +"\n"+ "{y:=sum(r);r[0]:=r[1];r[1]:=y;a[x]:=y}"+ "\n" + "return[a];"
+                    text: formtxt
                     placeholderText: qsTr("Mathematical expression")
                     inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText | Qt.ImhPreferNumbers
                     EnterKey.enabled: text.length > 0
@@ -199,7 +209,7 @@ Page {
                     height: icon.height
                     icon.source: "image://theme/icon-m-acknowledge"
                     anchors {
-                        top: formula.bottom
+                        top: formfield.bottom
                         right: parent.right
                         topMargin: Theme.paddingSmall
                         rightMargin: Theme.paddingSmall + 5

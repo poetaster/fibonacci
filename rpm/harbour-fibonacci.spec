@@ -16,7 +16,7 @@ Name:       harbour-fibonacci
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
 Summary:    RPN Calculator with exprtk programmagle interface for SailfishOS.
-Version:    0.9.1
+Version:    1.0.0
 Release:    1
 Group:      Qt/Qt
 License:    GPL

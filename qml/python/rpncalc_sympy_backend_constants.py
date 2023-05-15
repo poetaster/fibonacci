@@ -35,7 +35,7 @@ class Golden(NumberSymbol):
     is_number = True
     is_algebraic = False
 
-    val='1.61803398874989490252573887'
+    val='1.6180339887498949'
 
     def _eval_evalf(self,prec):
         return N(self.val,prec)

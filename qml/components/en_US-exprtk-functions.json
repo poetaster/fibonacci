@@ -267,7 +267,7 @@
 	 "example": ""},
 {"name": "<=>",    
 	"desc": "Swap the values of x and y. Where x and y are mutable strings. (eg: x <=> y)",
-	 "example": ""},
+         "example": "x <=> y"},
 {"name": "[]",     
 	"desc": "The string size operator returns the size of the string being actioned.",
 	 "example": ""},
@@ -282,7 +282,7 @@
 	 "example": "switch { case x > (y + z) : 2 * x / abs(y - z); case x < 3: sin(x + y); default: 1 + x; }"},
 {"name": "while",  
 	"desc": "The structure will repeatedly evaluate the internalstatement(s) 'while' the condition is true. The final statement in the final iteration will be used as the return value of the loop. eg: while ((x -= 1) > 0) { y := x + z; w := u + y; }",
-	 "example": "while ((x -= 1) > 0) { y := x + z; w := u + y; }"},
+         "example": "while((x+=1)<z)\n{y:=sum(r);r[0]:=r[1];r[1]:=y;a[x]:=y}\nreturn[a];"},
 {"name": "repeat/until", 
 	"desc": "The structure will repeatedly evaluate the internalstatement(s) 'until' the condition is true. The final statement in the final iteration will be used as the return value of the loop. eg: repeat y := x + z; w := u + y; until ((x += 1) > 100)",
 	 "example": "repeat y := x + z; w := u + y; until ((x += 1) > 100)"},
@@ -309,5 +309,5 @@
 	 "example": ""},
 {"name": "[]",     
 	"desc": "The vector size operator returns the size of the vector being actioned. eg: 1. v[] 2. max_size := max(v0[],v1[],v2[],v3[])",
-    "example": ""}
+    "example": "max(v0[],v1[],v2[],v3[])"}
 ]

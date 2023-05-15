@@ -43,6 +43,10 @@ ApplicationWindow
     property var currentStack: []
     property bool engineLoaded
     property alias memoryModel: memory
+    property string varstxt: settings.recentVars
+    //"x:=0; y:=1; var t[2]:={0,1}; z:=12; "
+    property string formtxt: settings.lastFormula
+    //"while((x+=1)<z)" +"\n"+ "{y:=sum(r);r[0]:=r[1];r[1]:=y;a[x]:=y}"+ "\n" + "return[a];"
 
     QtObject {
         id:stat
