@@ -112,7 +112,7 @@ Page {
         newtxt = newtxt.replace(re2, "sqrt")
         newtxt = newtxt.replace(re3, "phi")
         newtxt = newtxt.replace(re5, "rad2deg")
-        newtxt = newtxt.replace(re5, "log")
+        newtxt = newtxt.replace(re6, "log")
         return newtxt
     }
 
