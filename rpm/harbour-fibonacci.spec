@@ -38,7 +38,6 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 BuildRequires:  python3-rpm-macros
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-setuptools_scm
 BuildRequires:  python3-base
 BuildRequires:  python3-devel
 
