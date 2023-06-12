@@ -157,7 +157,7 @@ Page {
             fontSize: page.fontSizeExtraLarge
             fontFamily: page.fontFamily
 
-            dropIconPath: "image://Theme/icon-l-backspace"
+            dropIconPath: "image://Theme/icon-m-backspace"
             dropIconColor: page.primaryColor
 
             height: heightMeasurement.height > contentHeight ? contentHeight : heightMeasurement.height
@@ -195,7 +195,7 @@ Page {
             operand: page.currentOperand
             operandInvalid: page.currentOperandValid ? false : true  // <= lol
 
-            backIcon: "image://Theme/icon-l-backspace"
+            backIcon: "image://Theme/icon-m-backspace"
             backIconColor: page.primaryColor
 
             fontSize: page.fontSizeExtraLarge
