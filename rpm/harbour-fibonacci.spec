@@ -5,6 +5,7 @@
 
 Name:       harbour-fibonacci
 # >> macros
+%define _binary_payload w2.xzdio
 %define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude ^libc|libdl|libm|libpthread|libpython3.7m|libpython3.4m|python|env|libutil.*$

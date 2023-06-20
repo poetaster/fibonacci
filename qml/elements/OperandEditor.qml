@@ -123,8 +123,8 @@ Item{
                     //console.log(text)
                     //console.log(operand)
                     //console.log(height)
-                    console.log(width)
-                    console.log(operandEditor.flickableSize)
+                    //console.log(width)
+                    //console.log(operandEditor.flickableSize)
                     flickable.flickToRightEdge();
                 }
             }
