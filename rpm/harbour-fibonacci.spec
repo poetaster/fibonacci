@@ -6,10 +6,13 @@
 Name:       harbour-fibonacci
 # >> macros
 %define _binary_payload w2.xzdio
+%define _with_harbour 0
 %define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude ^libc|libdl|libm|libpthread|libpython3.7m|libpython3.4m|python|env|libutil.*$
 # << macros
+
+%bcond_with harbour
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
@@ -31,13 +34,17 @@ Source0:    %{name}-%{version}.tar.bz2
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
+%if ! %{with harbour}
 Requires:   jolla-keyboard
+%endif
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
+%if "%{?vendor}" == "chum"
 BuildRequires:  python3-setuptools_scm
+%endif
 BuildRequires:  python3-rpm-macros
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-base
@@ -115,6 +122,7 @@ rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
 cd %_builddir
 
+%if ! %{with harbour}
 %post
 # >> post
 killall maliit-server
@@ -123,6 +131,7 @@ killall maliit-server
 # >> postun
 killall maliit-server
 # << postun
+%endif
 
 %files
 %defattr(-,root,root,-)
@@ -130,7 +139,9 @@ killall maliit-server
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%if ! %{with harbour}
 %{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
 %{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
+%endif
 # >> files
 # << files
