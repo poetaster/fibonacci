@@ -17,17 +17,12 @@ Name:       harbour-fibonacci
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
 Summary:    RPN Calculator with exprtk programmable interface for SailfishOS.
-Version:    1.0.2
+Version:    1.0.3
 Release:    1
 Group:      Qt/Qt
 License:    GPL
 URL:        https://github.com/poetaster/fibonacci
 Source0:    %{name}-%{version}.tar.bz2
-
-#Source1:    https://files.pythonhosted.org/packages/s/fastcache/fastcache-1.0.2.tar.gz
-#Source2:    https://files.pythonhosted.org/packages/s/mpmath/mpmath-0.19.tar.gz
-#Source3:    https://files.pythonhosted.org/packages/s/sympy/sympy-0.7.6.1.tar.gz
-#Source4:    https://files.pythonhosted.org/packages/s/dice/dice-1.0.2.tar.gz
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
@@ -100,9 +95,9 @@ cd %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
 rm -rf  %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
 
-cd %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.0.3
+cd %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-rm -rf %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.0.3
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
 
 cd %{buildroot}/%{_datadir}/%{name}/lib/mpmath-1.2.1
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
