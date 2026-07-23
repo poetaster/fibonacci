@@ -17,7 +17,7 @@ Name:       harbour-fibonacci
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
 Summary:    RPN Calculator with exprtk programmable interface for SailfishOS.
-Version:    1.0.3
+Version:    1.0.4
 Release:    1
 Group:      Qt/Qt
 License:    GPL
@@ -90,18 +90,19 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
+ mkdir -p %{buildroot}%{_datadir}/%{name}/python
+
+# Copy python modules that were built by COPIES
+if [ -d python/mpmath ]; then
+   cp -r python/mpmath  %{buildroot}%{_datadir}/%{name}/python/
+fi
+if [ -d python/pyparsing ]; then
+   cp -r python/pyparsing/pyparsing.py  %{buildroot}%{_datadir}/%{name}/python/pyparsing.py
+fi
 
 cd %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
 rm -rf  %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
-
-cd %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-rm -rf %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
-
-cd %{buildroot}/%{_datadir}/%{name}/lib/mpmath-1.2.1
-python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
-rm -rf %{buildroot}/%{_datadir}/%{name}/lib/mpmath-1.2.1
 
 cd %{buildroot}/%{_datadir}/%{name}/lib/dice-1.0.2
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
