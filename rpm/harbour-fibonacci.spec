@@ -128,7 +128,9 @@ killall maliit-server
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%if "%{?vendor}" == "chum"
 %{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
 %{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
+%endif
 # >> files
 # << files

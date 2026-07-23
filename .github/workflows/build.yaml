@@ -3,10 +3,7 @@ name: Github CI build
 on:
   push:
     tags:
-      - 'v*'
-  pull_request:
-    branches:
-      - main
+      - '1.*'
 env:
   RELEASE: 5.0.0.43
 
@@ -16,11 +13,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        submodules: true
 
     - name: Prepare
       run: mkdir output
+
+    - name: Build aarch64
+      id: build_aarch64
+      uses: coderus/github-sfos-build@sfos5
+      with:
+        release: ${{ env.RELEASE }}
+        arch: aarch64
+      
+    - name: Build armv7hl
+      id: build_armv7hl
+      uses: coderus/github-sfos-build@sfos5
+      with:
+        release: ${{ env.RELEASE }}
+        arch: armv7hl
 
     - name: Build i486
       id: build_i486
@@ -28,7 +37,6 @@ jobs:
       with:
         release: ${{ env.RELEASE }}
         arch: i486
-
 
     - name: Extract Version Name
       id: extract_name
