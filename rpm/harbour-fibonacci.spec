@@ -8,10 +8,12 @@ Name:       harbour-fibonacci
 %define _binary_payload w2.xzdio
 %define __provides_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
 %define __requires_exclude_from ^%{_datadir}/%{name}/lib/.*\\.so\\>
-%define __requires_exclude ^libc|libdl|libm|libpthread|libpython3.7m|libpython3.4m|python|env|libutil.*$
 # << macros
 
-%if "%{?vendor}" == "chum"
+%{!?harbour_store:%define harbour_store %(if [ -n "$HARBOUR_STORE" ]; then echo 1; elif echo "$PWD" | grep -q -- '-Store'; then echo 1; else echo 0; fi)}
+
+# flip with and without to locally build as it would on chum
+%if 0%{?harbour_store}
 %bcond_with harbour
 %else
 %bcond_without harbour
@@ -35,6 +37,9 @@ Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 
 %if %{without harbour}
 Requires:   jolla-keyboard
+%endif
+
+%if "%{?vendor}" == "chum"
 BuildRequires:  python3-setuptools_scm
 %endif
 
