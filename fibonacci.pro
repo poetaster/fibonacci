@@ -41,9 +41,9 @@ harbour_store {
   INSTALLS += layout
 }
 # to build in the sdk for NON store uncomment
-  layout.path = /usr/share/maliit/plugins/com/jolla/layouts
-  layout.files = layouts/programmers.qml layouts/layouts_programmers.conf
-  INSTALLS += layout
+#  layout.path = /usr/share/maliit/plugins/com/jolla/layouts
+#  layout.files = layouts/programmers.qml layouts/layouts_programmers.conf
+#  INSTALLS += layout
 
 
 python.path = /usr/share/$${TARGET}/qml

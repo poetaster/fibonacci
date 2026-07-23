@@ -35,7 +35,7 @@ Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 
-%if %{without harbour}
+%if %{without harbour} ||  "%{?vendor}" == "chum"
 Requires:   jolla-keyboard
 %endif
 
@@ -126,7 +126,7 @@ rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
 cd %_builddir
 
-%if %{without harbour}
+%if %{without harbour} || "%{?vendor}" == "chum"
 %post
 # >> post
 killall maliit-server
@@ -143,7 +143,7 @@ killall maliit-server
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%if %{without harbour}
+%if %{without harbour} || "%{?vendor}" == "chum"
 %{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
 %{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
 %endif
