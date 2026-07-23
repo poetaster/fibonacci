@@ -85,7 +85,7 @@ Url:
 # >> build pre
 # << build pre
 
-%if %{without harbour}
+%if %{without harbour} || "%{?vendor}" == "chum"
  %qmake5 VERSION=%{version} RELEASE=%{release}
 %else
   MB2_QMAKE_ARGS='CONFIG+=harbour_store' %qmake5 QMAKE_ARGS='CONFIG+=harbour_store' 'CONFIG+=harbour_store'
