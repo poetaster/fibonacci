@@ -33,8 +33,13 @@ OTHER_FILES += \
     qml/elements/*.qml \
     qml/components/*.qml \
 
-layout.path = /usr/share/maliit/plugins/com/jolla/layouts
-layout.files = layouts/programmers.qml layouts/layouts_programmers.conf
+harbour_store {
+  message("Yup store")
+} else {
+  layout.path = /usr/share/maliit/plugins/com/jolla/layouts
+  layout.files = layouts/programmers.qml layouts/layouts_programmers.conf
+  INSTALLS += layout
+}
 
 python.path = /usr/share/$${TARGET}/qml
 python.files = python
@@ -42,17 +47,8 @@ python.files = python
 libs.path = /usr/share/$${TARGET}
 libs.files = lib
 
-
-INSTALLS += layout
 INSTALLS += python
 INSTALLS += libs
-
-COPIES += parsing mpmath
-parsing.files = $$files(lib/pyparsing-2.4.7/pyparsing.py)
-parsing.path = $$OUT_PWD/python
-
-mpmath.files += $$files(lib/mpmath-1.2.1/mpmath)
-mpmath.path = $$OUT_PWD/python/
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 

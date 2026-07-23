@@ -11,13 +11,19 @@ Name:       harbour-fibonacci
 %define __requires_exclude ^libc|libdl|libm|libpthread|libpython3.7m|libpython3.4m|python|env|libutil.*$
 # << macros
 
+%if "%{?vendor}" == "chum"
+%bcond_with harbour
+%else
+%bcond_without harbour
+%endif
+
 %{!?qtc_qmake:%define qtc_qmake %qmake}
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
 Summary:    RPN Calculator with exprtk programmable interface for SailfishOS.
-Version:    1.0.3
+Version:    1.0.4
 Release:    1
 Group:      Qt/Qt
 License:    GPL
@@ -26,15 +32,17 @@ Source0:    %{name}-%{version}.tar.bz2
 
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
+
+%if %{without harbour}
 Requires:   jolla-keyboard
+BuildRequires:  python3-setuptools_scm
+%endif
+
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
-%if "%{?vendor}" == "chum"
-BuildRequires:  python3-setuptools_scm
-%endif
 BuildRequires:  python3-rpm-macros
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-base
@@ -72,14 +80,14 @@ Url:
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
-
-%qtc_make %{?_smp_mflags}
+%if %{without harbour}
+ %qmake5 VERSION=%{version} RELEASE=%{release}
+%else
+  MB2_QMAKE_ARGS='CONFIG+=harbour_store' %qmake5 QMAKE_ARGS='CONFIG+=harbour_store' 'CONFIG+=harbour_store'
+%endif
 
 
 %install
-rm -rf %{buildroot}
-
 # >> install pre
 # << install pre
 %qmake5_install
@@ -92,17 +100,17 @@ desktop-file-install --delete-original       \
 
  mkdir -p %{buildroot}%{_datadir}/%{name}/python
 
-# Copy python modules that were built by COPIES
-if [ -d python/mpmath ]; then
-   cp -r python/mpmath  %{buildroot}%{_datadir}/%{name}/python/
-fi
-if [ -d python/pyparsing ]; then
-   cp -r python/pyparsing/pyparsing.py  %{buildroot}%{_datadir}/%{name}/python/pyparsing.py
-fi
-
 cd %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
 rm -rf  %{buildroot}%{_datadir}/%{name}/lib/sympy-1.9
+
+cd %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/pyparsing-2.4.7
+
+cd %{buildroot}/%{_datadir}/%{name}/lib/mpmath-1.3.0
+python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
+rm -rf %{buildroot}/%{_datadir}/%{name}/lib/mpmath-1.3.0
 
 cd %{buildroot}/%{_datadir}/%{name}/lib/dice-1.0.2
 python3 setup.py install --root=%{buildroot} --prefix=%{_datadir}/%{name}/
@@ -113,6 +121,7 @@ rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
 cd %_builddir
 
+%if %{without harbour}
 %post
 # >> post
 killall maliit-server
@@ -121,6 +130,7 @@ killall maliit-server
 # >> postun
 killall maliit-server
 # << postun
+%endif
 
 %files
 %defattr(-,root,root,-)
@@ -128,7 +138,10 @@ killall maliit-server
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
+%if %{without harbour}
 %{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
 %{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
+%endif
+
 # >> files
 # << files
