@@ -85,10 +85,10 @@ Url:
 # >> build pre
 # << build pre
 
-%if %{without harbour} || "%{?vendor}" == "chum"
- %qmake5
-%else
+%if 0%{?harbour_store}
  %qmak5 CONFIG+=harbour_store
+%else
+ %qmake5
 %endif
 
 
@@ -126,7 +126,8 @@ rm -rf %{buildroot}/%{_datadir}/%{name}/bin
 
 cd %_builddir
 
-%if %{without harbour} || "%{?vendor}" == "chum"
+%if 0%{?harbour_store}
+%else
 %post
 # >> post
 killall maliit-server
@@ -143,7 +144,8 @@ killall maliit-server
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%if %{without harbour} || "%{?vendor}" == "chum"
+%if 0%{?harbour_store}
+%else
 %{_datadir}/maliit/plugins/com/jolla/layouts/programmers.qml
 %{_datadir}/maliit/plugins/com/jolla/layouts/layouts_programmers.conf
 %endif
