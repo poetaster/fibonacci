@@ -35,7 +35,8 @@ Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 
-%if %{without harbour} ||  "%{?vendor}" == "chum"
+%if 0%{?harbour_store}
+%else
 Requires:   jolla-keyboard
 %endif
 
