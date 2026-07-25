@@ -86,7 +86,7 @@ Url:
 # << build pre
 
 %if 0%{?harbour_store}
- %qmak5 CONFIG+=harbour_store
+ %qmake5 CONFIG+=harbour_store
 %else
  %qmake5
 %endif
